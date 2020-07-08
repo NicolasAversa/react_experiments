@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Person from "../../components/Person/Person.jsx";
 
 import Col from "react-bootstrap/Col";
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 
 const Home = () => {
@@ -57,25 +58,42 @@ const Home = () => {
   if (showPersons) {
     personsList = persons.map((person, index) => {
       return (
-        <Col xs={4} key={person.id}>
-          <Person
-            data={person}
-            click={deletePersonHandler.bind(this, index)}
-            change={nameChangedHandler.bind(this, person.id)}
-          >
-            {person.hobbies}
-          </Person>
-        </Col>
+        <Person
+          key={person.id}
+          data={person}
+          click={deletePersonHandler.bind(this, index)}
+          change={nameChangedHandler.bind(this, person.id)}
+        >
+          {person.hobbies}
+        </Person>
       );
     });
+  }
+
+  let buttonVariant = "";
+  if (showPersons) {
+    buttonVariant = "danger";
+  } else {
+    buttonVariant = "success";
+  }
+
+  // It's possible to join classes with alertVariant += " danger bold"
+  let alertVariant = "";
+  if (persons.length >= 3) {
+    alertVariant = "success";
+  }
+  if (persons.length <= 2) {
+    alertVariant = "danger";
   }
 
   return (
     <>
       <Col xs={12} className="mb-3">
         <h1>This is a React app, Hope you like it!</h1>
-        <h4 className="mb-3">Let's start the adventure!</h4>
-        <Button onClick={togglePersonsHandler} variant="primary">
+        <Alert variant={alertVariant} className="mb-3">
+          Your list has {persons.length} persons
+        </Alert>
+        <Button variant={buttonVariant} onClick={togglePersonsHandler}>
           Alternar visibilidad
         </Button>
       </Col>
