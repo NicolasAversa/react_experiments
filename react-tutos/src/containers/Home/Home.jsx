@@ -6,27 +6,69 @@ import Button from "react-bootstrap/Button";
 
 const Home = () => {
   const [persons, setPersons] = useState([
-    { name: "Nicolas", age: 24 },
-    { name: "Juan Manuel", age: 26 },
-    { name: "Florencia", age: 28 },
+    {
+      id: "Nicolas14",
+      name: "Nicolas",
+      age: 24,
+      hobbies: "Me gusta programar",
+    },
+    {
+      id: "JuanManuel26",
+      name: "Juan Manuel",
+      age: 26,
+      hobbies: "Me gusta diseñar mi mundo",
+    },
+    {
+      id: "Florencia28",
+      name: "Florencia",
+      age: 28,
+      hobbies: "Me gusta ampliar mis horizontes",
+    },
   ]);
   const [showPersons, setShowPersons] = useState(false);
 
-  const switchNameHandler = (newName) => {
-    let newPersons = [...persons];
-    newPersons[1].name = newName;
+  const nameChangedHandler = (id, event) => {
+    // Finding the index of the selected person
+    const personIndex = persons.findIndex((person) => {
+      return person.id === id;
+    });
+    // Copying the person object in the persons array
+    const person = { ...persons[personIndex] };
+    // Editing the name property in the selected person
+    person.name = event.target.value;
+    // Copying the whole persons array
+    const newPersons = [...persons];
+    // Editing and setting the whole persons array
+    newPersons[personIndex] = person;
     setPersons(newPersons);
   };
 
-  const nameChangedHandler = (event) => {
-    let newPersons = [...persons];
-    newPersons[1].name = event.target.value;
+  const deletePersonHandler = (index) => {
+    const newPersons = [...persons];
+    newPersons.splice(index, 1);
     setPersons(newPersons);
   };
 
   const togglePersonsHandler = () => {
     setShowPersons(!showPersons);
   };
+
+  let personsList = null;
+  if (showPersons) {
+    personsList = persons.map((person, index) => {
+      return (
+        <Col xs={4} key={person.id}>
+          <Person
+            data={person}
+            click={deletePersonHandler.bind(this, index)}
+            change={nameChangedHandler.bind(this, person.id)}
+          >
+            {person.hobbies}
+          </Person>
+        </Col>
+      );
+    });
+  }
 
   return (
     <>
@@ -37,29 +79,7 @@ const Home = () => {
           Alternar visibilidad
         </Button>
       </Col>
-      {showPersons ? (
-        <>
-          <Col xs={4}>
-            <Person name={persons[0].name} age={persons[0].age} />
-          </Col>
-          <Col xs={4}>
-            <Person
-              name={persons[1].name}
-              age={persons[1].age}
-              click={() => switchNameHandler("Pepito")}
-              change={nameChangedHandler}
-            />
-          </Col>
-          <Col xs={4}>
-            <Person name={persons[2].name} age={persons[2].age} />
-          </Col>
-          <Col xs={4}>
-            <Person name="Leonel" age="25">
-              Me gusta la papa!
-            </Person>
-          </Col>
-        </>
-      ) : null}
+      {personsList}
     </>
   );
 };
