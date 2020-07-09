@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import Person from "../../components/Person/Person.jsx";
-
-import Col from "react-bootstrap/Col";
-import Alert from "react-bootstrap/Alert";
-import Button from "react-bootstrap/Button";
+import PersonsList from "../../components/PersonList/PersonsList.jsx";
+import Header from "./../../components/Header/Header.jsx";
 
 const Home = () => {
   const [persons, setPersons] = useState([
@@ -26,6 +23,7 @@ const Home = () => {
       hobbies: "Me gusta ampliar mis horizontes",
     },
   ]);
+
   const [showPersons, setShowPersons] = useState(false);
 
   const nameChangedHandler = (id, event) => {
@@ -54,50 +52,19 @@ const Home = () => {
     setShowPersons(!showPersons);
   };
 
-  let personsList = null;
-  if (showPersons) {
-    personsList = persons.map((person, index) => {
-      return (
-        <Person
-          key={person.id}
-          data={person}
-          click={deletePersonHandler.bind(this, index)}
-          change={nameChangedHandler.bind(this, person.id)}
-        >
-          {person.hobbies}
-        </Person>
-      );
-    });
-  }
-
-  let buttonVariant = "";
-  if (showPersons) {
-    buttonVariant = "danger";
-  } else {
-    buttonVariant = "success";
-  }
-
-  // It's possible to join classes with alertVariant += " danger bold"
-  let alertVariant = "";
-  if (persons.length >= 3) {
-    alertVariant = "success";
-  }
-  if (persons.length <= 2) {
-    alertVariant = "danger";
-  }
-
   return (
     <>
-      <Col xs={12} className="mb-3">
-        <h1>This is a React app, Hope you like it!</h1>
-        <Alert variant={alertVariant} className="mb-3">
-          Your list has {persons.length} persons
-        </Alert>
-        <Button variant={buttonVariant} onClick={togglePersonsHandler}>
-          Alternar visibilidad
-        </Button>
-      </Col>
-      {personsList}
+      <Header
+        persons={persons}
+        showPersons={showPersons}
+        click={togglePersonsHandler}
+      />
+      <PersonsList
+        persons={persons}
+        showPersons={showPersons}
+        click={deletePersonHandler}
+        change={nameChangedHandler}
+      />
     </>
   );
 };
