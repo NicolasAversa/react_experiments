@@ -55,7 +55,7 @@ const Home = () => {
   return (
     <>
       <Header
-        persons={persons}
+        personsLength={persons.length}
         showPersons={showPersons}
         click={togglePersonsHandler}
       />

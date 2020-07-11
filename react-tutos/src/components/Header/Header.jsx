@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 
 const Header = (props) => {
+  useEffect(() => {
+    console.log("Pepito");
+  });
+
   let buttonVariant = "";
   if (props.showPersons) {
     buttonVariant = "danger";
@@ -14,10 +18,10 @@ const Header = (props) => {
 
   // It's possible to join classes with alertVariant += " danger bold"
   let alertVariant = "";
-  if (props.persons.length >= 3) {
+  if (props.personsLength >= 3) {
     alertVariant = "success";
   }
-  if (props.persons.length <= 2) {
+  if (props.personsLength <= 2) {
     alertVariant = "danger";
   }
 
@@ -25,7 +29,7 @@ const Header = (props) => {
     <Col xs={12} className="mb-3">
       <h1>This is a React app, Hope you like it!</h1>
       <Alert variant={alertVariant} className="mb-3">
-        Your list has {props.persons.length} persons
+        Your list has {props.personsLength} persons
       </Alert>
       <Button variant={buttonVariant} onClick={props.click}>
         Alternar visibilidad
