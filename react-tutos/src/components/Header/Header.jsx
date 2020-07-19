@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 const Header = (props) => {
   useEffect(() => {
-    console.log("Pepito");
+    console.log("Use effect");
   });
 
   let buttonVariant = "";
