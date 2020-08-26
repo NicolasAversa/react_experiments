@@ -1,20 +1,20 @@
-import React, { useEffect, useRef } from 'react';
-
+import React, { useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
+import AuthContext from '../../context/auth-context';
 
 const propTypes = {
   showPersons: PropTypes.bool.isRequired,
   personsLength: PropTypes.number.isRequired,
   click: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
 };
 
 function Header(props) {
-  const { showPersons, personsLength, click, login } = props;
+  const { showPersons, personsLength, click } = props;
   const toggleButtonRef = useRef(null);
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
     // console.log("Use effect");
@@ -46,7 +46,7 @@ function Header(props) {
       <Button ref={toggleButtonRef} variant={buttonVariant} onClick={click}>
         Alternar visibilidad
       </Button>
-      <Button onClick={login}>Login</Button>
+      <Button onClick={authContext.loginHandler}>Login</Button>
     </Col>
   );
 }

@@ -1,30 +1,23 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import AuthContext from '../../../context/auth-context';
 
 const propTypes = {
   personName: PropTypes.string.isRequired,
   personAge: PropTypes.number.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
   children: PropTypes.string.isRequired,
   click: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
 };
 
 function Person(props) {
-  const {
-    personName,
-    personAge,
-    click,
-    change,
-    children,
-    isAuthenticated,
-  } = props;
+  const { personName, personAge, click, change, children } = props;
+  const authContext = useContext(AuthContext);
 
   let authenticationStatus;
-  if (isAuthenticated) {
+  if (authContext.authenticated) {
     authenticationStatus = <p>You are authenticated</p>;
   } else {
     authenticationStatus = <p>Please Log In</p>;

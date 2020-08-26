@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PersonsList from '../../components/PersonList/PersonsList';
 import Header from '../../components/Header/Header';
+import AuthContext from '../../context/auth-context';
 
 const Home = () => {
   const [persons, setPersons] = useState([
@@ -57,19 +58,21 @@ const Home = () => {
 
   return (
     <>
-      <Header
-        personsLength={persons.length}
-        showPersons={showPersons}
-        click={togglePersonsHandler}
-        login={loginHandler}
-      />
-      <PersonsList
-        persons={persons}
-        showPersons={showPersons}
-        click={deletePersonHandler}
-        change={nameChangedHandler}
-        isAuthenticated={authenticated}
-      />
+      <AuthContext.Provider value={{ loginHandler }}>
+        <Header
+          personsLength={persons.length}
+          showPersons={showPersons}
+          click={togglePersonsHandler}
+        />
+      </AuthContext.Provider>
+      <AuthContext.Provider value={{ authenticated }}>
+        <PersonsList
+          persons={persons}
+          showPersons={showPersons}
+          click={deletePersonHandler}
+          change={nameChangedHandler}
+        />
+      </AuthContext.Provider>
     </>
   );
 };

@@ -1,18 +1,16 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 import Person from './Person/Person';
 
 const propTypes = {
   showPersons: PropTypes.bool.isRequired,
   persons: PropTypes.arrayOf(PropTypes.object).isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
   click: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
 };
 
 function PersonsList(props) {
-  const { showPersons, isAuthenticated, click, change } = props;
+  const { showPersons, click, change } = props;
 
   let personsList = null;
   if (showPersons) {
@@ -24,7 +22,6 @@ function PersonsList(props) {
         person={person}
         click={() => click(index)}
         change={(event) => change(event, person.id)}
-        isAuthenticated={isAuthenticated}
       >
         {person.hobbies}
       </Person>
