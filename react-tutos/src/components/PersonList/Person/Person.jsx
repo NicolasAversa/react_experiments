@@ -5,10 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
 const propTypes = {
-  person: PropTypes.shape({
-    name: PropTypes.string,
-    age: PropTypes.number,
-  }).isRequired,
+  personName: PropTypes.string.isRequired,
+  personAge: PropTypes.number.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   children: PropTypes.string.isRequired,
   click: PropTypes.func.isRequired,
@@ -16,7 +14,14 @@ const propTypes = {
 };
 
 function Person(props) {
-  const { person, click, change, children, isAuthenticated } = props;
+  const {
+    personName,
+    personAge,
+    click,
+    change,
+    children,
+    isAuthenticated,
+  } = props;
 
   let authenticationStatus;
   if (isAuthenticated) {
@@ -28,14 +33,14 @@ function Person(props) {
     <Col xs={4}>
       <Card className="mb-3">
         <Card.Body>
-          <Card.Title onClick={click}>{person.name}</Card.Title>
+          <Card.Title onClick={click}>{personName}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
             Edad:
-            {person.age}
+            {personAge}
           </Card.Subtitle>
           <Card.Text>{children}</Card.Text>
           {authenticationStatus}
-          <input type="text" onChange={change} defaultValue={person.name} />
+          <input type="text" onChange={change} defaultValue={personName} />
         </Card.Body>
       </Card>
     </Col>
@@ -44,4 +49,4 @@ function Person(props) {
 
 Person.propTypes = propTypes;
 
-export default Person;
+export default React.memo(Person);

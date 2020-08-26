@@ -41,9 +41,7 @@ function Header(props) {
     <Col xs={12} className="mb-3">
       <h1>This is a React app, Hope you like it!</h1>
       <Alert variant={alertVariant} className="mb-3">
-        Your list has
-        {personsLength}
-        persons
+        {`Your list has ${personsLength} persons`}
       </Alert>
       <Button ref={toggleButtonRef} variant={buttonVariant} onClick={click}>
         Alternar visibilidad
@@ -55,4 +53,4 @@ function Header(props) {
 
 Header.propTypes = propTypes;
 
-export default Header;
+export default React.memo(Header);

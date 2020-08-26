@@ -19,8 +19,10 @@ function PersonsList(props) {
     personsList = props.persons.map((person, index) => (
       <Person
         key={person.id}
+        personName={person.name}
+        personAge={person.age}
         person={person}
-        click={(event) => click(event, index)}
+        click={() => click(index)}
         change={(event) => change(event, person.id)}
         isAuthenticated={isAuthenticated}
       >
@@ -33,4 +35,4 @@ function PersonsList(props) {
 
 PersonsList.propTypes = propTypes;
 
-export default PersonsList;
+export default React.memo(PersonsList);

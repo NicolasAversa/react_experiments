@@ -27,7 +27,7 @@ const Home = () => {
   const [showPersons, setShowPersons] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
-  const nameChangedHandler = (id, event) => {
+  const nameChangedHandler = (event, id) => {
     // Finding the index of the selected person
     const personIndex = persons.findIndex((person) => person.id === id);
     // Copying the person object in the persons array
@@ -74,4 +74,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);
