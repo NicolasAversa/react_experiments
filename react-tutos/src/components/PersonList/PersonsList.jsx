@@ -1,30 +1,32 @@
-import React from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
-import Person from "./Person/Person.jsx";
+import PropTypes from 'prop-types';
+import Person from './Person/Person';
 
 const propTypes = {
-  showPersons: PropTypes.bool,
-  persons: PropTypes.arrayOf(PropTypes.object),
-  click: PropTypes.func,
-  change: PropTypes.func,
+  showPersons: PropTypes.bool.isRequired,
+  persons: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  click: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
 };
 
 function PersonsList(props) {
+  const { showPersons, isAuthenticated, click, change } = props;
+
   let personsList = null;
-  if (props.showPersons) {
-    personsList = props.persons.map((person, index) => {
-      return (
-        <Person
-          key={person.id}
-          person={person}
-          click={props.click.bind(this, index)}
-          change={props.change.bind(this, person.id)}
-        >
-          {person.hobbies}
-        </Person>
-      );
-    });
+  if (showPersons) {
+    personsList = props.persons.map((person, index) => (
+      <Person
+        key={person.id}
+        person={person}
+        click={(event) => click(event, index)}
+        change={(event) => change(event, person.id)}
+        isAuthenticated={isAuthenticated}
+      >
+        {person.hobbies}
+      </Person>
+    ));
   }
   return <>{personsList}</>;
 }
