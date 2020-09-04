@@ -11,8 +11,8 @@ function BurgerBuilder() {
 
   return (
     <>
-      <div>Burger</div>
       <Burger ingredients={ingredients} />
+      <div>Build controls</div>
     </>
   );
 }

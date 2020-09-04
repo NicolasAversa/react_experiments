@@ -14,9 +14,13 @@ const propTypes = {
 
 function Burger(props) {
   const { ingredients } = props;
-  const transformedIngredients = Object.keys(ingredients).map((key) =>
-    [...Array(ingredients[key])].map((_, i) => <BurgerIngredient key={key + i} type={key} />),
-  );
+  let transformedIngredients = Object.keys(ingredients)
+    .map((key) => [...Array(ingredients[key])].map((_, i) => <BurgerIngredient key={key + i} type={key} />))
+    .reduce((array, element) => array.concat(element), []);
+
+  if (transformedIngredients.length === 0) {
+    transformedIngredients = <p>Please add ingredients</p>;
+  }
 
   return (
     <div className={styles.Burger}>
