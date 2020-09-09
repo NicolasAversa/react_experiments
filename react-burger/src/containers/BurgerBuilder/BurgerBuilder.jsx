@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import Col from 'react-bootstrap/Col';
 import Burger from '../../components/Burger/Burger';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 
 function BurgerBuilder() {
   const [ingredients, setIngredients] = useState({
@@ -11,8 +13,10 @@ function BurgerBuilder() {
 
   return (
     <>
-      <Burger ingredients={ingredients} />
-      <div>Build controls</div>
+      <Col xs={12}>
+        <Burger ingredients={ingredients} />
+      </Col>
+      <BuildControls />
     </>
   );
 }

@@ -1,13 +1,17 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 
 function Layout(props) {
   const { children } = props;
 
   return (
-    <>
-      <div>Toolbar, SideDrawer and Backdrop</div>
-      <main>{children}</main>
-    </>
+    <Container fluid>
+      <Row>
+        <div>Toolbar, SideDrawer and Backdrop</div>
+        {children}
+      </Row>
+    </Container>
   );
 }
 

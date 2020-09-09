@@ -1,0 +1,17 @@
+.less {
+  background-color: #d39952;
+}
+
+.more {
+  background-color: #8f5e1e;
+}
+
+.less:hover,
+.less:active {
+  background-color: #daa972;
+}
+
+.more:hover,
+.more:active {
+  background-color: #99703f;
+}
