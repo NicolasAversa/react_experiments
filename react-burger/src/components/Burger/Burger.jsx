@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Burger.module.css';
+import Col from 'react-bootstrap/Col';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
+import styles from './Burger.module.css';
 
 const propTypes = {
   ingredients: PropTypes.shape({
@@ -23,11 +24,13 @@ function Burger(props) {
   }
 
   return (
-    <div className={styles.Burger}>
-      <BurgerIngredient type="bread-top" />
-      {transformedIngredients}
-      <BurgerIngredient type="bread-bottom" />
-    </div>
+    <Col xs={12}>
+      <div className={styles.Burger}>
+        <BurgerIngredient type="bread-top" />
+        {transformedIngredients}
+        <BurgerIngredient type="bread-bottom" />
+      </div>
+    </Col>
   );
 }
 
