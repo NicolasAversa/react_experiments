@@ -8,6 +8,7 @@ import styles from './BuildControls.module.css';
 const propTypes = {
   addIngredientHandler: PropTypes.func.isRequired,
   removeIngredientHandler: PropTypes.func.isRequired,
+  purchaseHandler: PropTypes.func.isRequired,
   totalPrice: PropTypes.number.isRequired,
   purchasable: PropTypes.bool.isRequired,
   disabled: PropTypes.objectOf(PropTypes.bool).isRequired,
@@ -22,7 +23,12 @@ const controls = [
 
 function BuildControls(props) {
   const {
-    addIngredientHandler, removeIngredientHandler, totalPrice, purchasable, disabled,
+    addIngredientHandler,
+    removeIngredientHandler,
+    purchaseHandler,
+    totalPrice,
+    purchasable,
+    disabled,
   } = props;
 
   const controlsRendered = controls.map((control) => (
@@ -42,7 +48,13 @@ function BuildControls(props) {
         <p className="font-weight-bold d-inline">{` ${totalPrice.toFixed(2)}`}</p>
       </p>
       {controlsRendered}
-      <Button className={`${styles.orderButton} mt-3 border-0`} disabled={!purchasable}>ORDER NOW</Button>
+      <Button
+        className={`${styles.orderButton} mt-3 border-0`}
+        onClick={purchaseHandler}
+        disabled={!purchasable}
+      >
+        ORDER NOW
+      </Button>
     </Col>
   );
 }

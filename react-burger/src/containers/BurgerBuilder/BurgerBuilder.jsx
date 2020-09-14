@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import BurgerModal from '../../components/UI/BurgerModal/BurgerModal';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -11,20 +12,23 @@ const INGREDIENT_PRICES = {
 
 function BurgerBuilder() {
   const [ingredients, setIngredients] = useState({
-    salad: 1,
-    bacon: 1,
-    cheese: 2,
-    meat: 2,
+    salad: 0,
+    bacon: 0,
+    cheese: 0,
+    meat: 0,
   });
   const [totalPrice, setTotalPrice] = useState(4);
   const [purchasable, setPurchasable] = useState(false);
+  const [purchasing, setPurchasing] = useState(false);
 
   const disabledInfo = Object.fromEntries(
     Object.entries(ingredients).map(([key, value]) => [key, value <= 0]),
   );
 
   const updatePurchaseState = (newIngredients) => {
-    const ingredientsSum = Object.keys(newIngredients).map((key) => newIngredients[key]).reduce((sum, element) => sum + element, 0);
+    const ingredientsSum = Object.keys(newIngredients)
+      .map((key) => newIngredients[key])
+      .reduce((sum, element) => sum + element, 0);
     setPurchasable(ingredientsSum > 0);
   };
 
@@ -61,12 +65,32 @@ function BurgerBuilder() {
     updatePurchaseState(updatedIngredients);
   };
 
+  const purchaseHandler = () => {
+    setPurchasing(true);
+  };
+
+  const purchaseCancelHandler = () => {
+    setPurchasing(false);
+  };
+
+  const purchaseContinueHandler = () => {
+    alert('You can continue!');
+  };
+
   return (
     <>
+      <BurgerModal
+        show={purchasing}
+        handleClose={purchaseCancelHandler}
+        purchaseContinueHandler={purchaseContinueHandler}
+        totalPrice={totalPrice}
+        ingredients={ingredients}
+      />
       <Burger ingredients={ingredients} />
       <BuildControls
         addIngredientHandler={addIngredientHandler}
         removeIngredientHandler={removeIngredientHandler}
+        purchaseHandler={purchaseHandler}
         totalPrice={totalPrice}
         purchasable={purchasable}
         disabled={disabledInfo}
