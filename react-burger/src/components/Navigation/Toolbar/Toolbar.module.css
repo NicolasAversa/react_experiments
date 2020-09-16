@@ -1,3 +1,9 @@
 .toolbarBackground {
   background-color: #703b09;
 }
+
+@media (min-width: 768px) {
+  .navLinkActive {
+    border-bottom: 0.25rem solid #40a4c8;
+  }
+}

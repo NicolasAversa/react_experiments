@@ -45,7 +45,7 @@ function BuildControls(props) {
     <Col xs={12} className={`${styles.buildControls} py-4 d-flex align-items-center flex-column`}>
       <p>
         Current price:
-        <p className="font-weight-bold d-inline">{` ${totalPrice.toFixed(2)}`}</p>
+        <b className="font-weight-bold d-inline">{` ${totalPrice.toFixed(2)}`}</b>
       </p>
       {controlsRendered}
       <Button
