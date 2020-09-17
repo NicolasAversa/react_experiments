@@ -50,4 +50,4 @@ function BurgerModal(props) {
 
 BurgerModal.propTypes = propTypes;
 
-export default BurgerModal;
+export default React.memo(BurgerModal);
