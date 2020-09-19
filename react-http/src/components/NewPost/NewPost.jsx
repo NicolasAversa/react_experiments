@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './NewPost.css';
 
 function NewPost() {
   const [post, setPost] = useState({
     title: '',
-    content: '',
-    author: 'Max',
+    body: '',
+    author: 'Nicolas',
   });
+
+  const postDataHandler = () => {
+    const data = {
+      title: post.title,
+      body: post.body,
+      author: post.author,
+    };
+    axios.post('/posts', data).then((response) => {
+      console.log(response);
+    });
+  };
 
   return (
     <div className="NewPost">
@@ -28,10 +40,12 @@ function NewPost() {
         value={post.author}
         onChange={(event) => setPost({ ...post, author: event.target.value })}
       >
-        <option value="Max">Max</option>
-        <option value="Manu">Manu</option>
+        <option value="Nicolas">Nicolas</option>
+        <option value="Juanma">Juanma</option>
       </select>
-      <button type="submit">Add Post</button>
+      <button type="submit" onClick={postDataHandler}>
+        Add Post
+      </button>
     </div>
   );
 }

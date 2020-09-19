@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import BurgerModal from '../../components/UI/BurgerModal/BurgerModal';
+import ErrorHandler from '../../components/UI/ErrorHandler/ErrorHandler';
+import axios from '../../axios-orders';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -20,6 +22,7 @@ function BurgerBuilder() {
   const [totalPrice, setTotalPrice] = useState(4);
   const [purchasable, setPurchasable] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const disabledInfo = Object.fromEntries(
     Object.entries(ingredients).map(([key, value]) => [key, value <= 0]),
@@ -74,7 +77,29 @@ function BurgerBuilder() {
   };
 
   const purchaseContinueHandler = () => {
-    alert('You can continue!');
+    setLoading(true);
+
+    const order = {
+      ingredients,
+      totalPrice: totalPrice.toFixed(2),
+      customer: {
+        name: 'Juanma Arancibia',
+        adress: { street: '33', number: '825 1/2', country: 'Argentina' },
+        email: 'juanma@hotmail.com',
+      },
+      deliveryMethod: 'Fastest',
+    };
+
+    axios
+      .post('/orders.json', order)
+      .then(() => {
+        setLoading(false);
+        setPurchasing(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        setPurchasing(false);
+      });
   };
 
   return (
@@ -85,7 +110,9 @@ function BurgerBuilder() {
         purchaseContinueHandler={purchaseContinueHandler}
         totalPrice={totalPrice}
         ingredients={ingredients}
+        loading={loading}
       />
+      <ErrorHandler axios={axios} />
       <Burger ingredients={ingredients} />
       <BuildControls
         addIngredientHandler={addIngredientHandler}
