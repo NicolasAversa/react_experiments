@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import BurgerModal from '../../components/UI/BurgerModal/BurgerModal';
@@ -13,20 +14,23 @@ const INGREDIENT_PRICES = {
 };
 
 function BurgerBuilder() {
-  const [ingredients, setIngredients] = useState({
-    salad: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0,
-  });
+  const [ingredients, setIngredients] = useState(null);
   const [totalPrice, setTotalPrice] = useState(4);
   const [purchasable, setPurchasable] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const disabledInfo = Object.fromEntries(
-    Object.entries(ingredients).map(([key, value]) => [key, value <= 0]),
-  );
+  useEffect(() => {
+    axios
+      .get('/ingredients.json')
+      .then((response) => {
+        setIngredients(response.data);
+      })
+      .catch(() => {
+        setError(true);
+      });
+  }, []);
 
   const updatePurchaseState = (newIngredients) => {
     const ingredientsSum = Object.keys(newIngredients)
@@ -102,8 +106,33 @@ function BurgerBuilder() {
       });
   };
 
-  return (
-    <>
+  let burgerModal = null;
+  let burger = error ? (
+    <p className="mt-5 ml-3">Ingredients can't be loaded</p>
+  ) : (
+    <Spinner animation="border" variant="primary" className="mt-5 mx-auto" />
+  );
+
+  if (ingredients) {
+    const disabledInfo = Object.fromEntries(
+      Object.entries(ingredients).map(([key, value]) => [key, value <= 0]),
+    );
+
+    burger = (
+      <>
+        <Burger ingredients={ingredients} />
+        <BuildControls
+          addIngredientHandler={addIngredientHandler}
+          removeIngredientHandler={removeIngredientHandler}
+          purchaseHandler={purchaseHandler}
+          totalPrice={totalPrice}
+          purchasable={purchasable}
+          disabled={disabledInfo}
+        />
+      </>
+    );
+
+    burgerModal = (
       <BurgerModal
         show={purchasing}
         handleClose={purchaseCancelHandler}
@@ -112,16 +141,14 @@ function BurgerBuilder() {
         ingredients={ingredients}
         loading={loading}
       />
+    );
+  }
+
+  return (
+    <>
+      {burgerModal}
       <ErrorHandler axios={axios} />
-      <Burger ingredients={ingredients} />
-      <BuildControls
-        addIngredientHandler={addIngredientHandler}
-        removeIngredientHandler={removeIngredientHandler}
-        purchaseHandler={purchaseHandler}
-        totalPrice={totalPrice}
-        purchasable={purchasable}
-        disabled={disabledInfo}
-      />
+      {burger}
     </>
   );
 }

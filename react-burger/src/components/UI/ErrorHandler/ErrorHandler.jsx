@@ -12,16 +12,21 @@ function ErrorHandler(props) {
   const { axios } = props;
 
   useEffect(() => {
-    axios.interceptors.request.use((request) => {
+    const requestInterceptor = axios.interceptors.request.use((request) => {
       setErrorMessage(null);
       return request;
     });
-    axios.interceptors.response.use(
+    const responseInterceptor = axios.interceptors.response.use(
       (response) => response,
       (error) => {
         setErrorMessage(error);
       },
     );
+
+    return () => {
+      axios.interceptors.request.eject(requestInterceptor);
+      axios.interceptors.response.eject(responseInterceptor);
+    };
   }, [axios]);
 
   const handleClose = () => {
@@ -34,13 +39,11 @@ function ErrorHandler(props) {
   }
 
   return (
-    <Modal show={errorMessage} centered onHide={handleClose}>
+    <Modal show={!!errorMessage} centered onHide={handleClose}>
       <Modal.Header>
         <Modal.Title>Something gone wrong :(</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        {errorParagraph}
-      </Modal.Body>
+      <Modal.Body>{errorParagraph}</Modal.Body>
     </Modal>
   );
 }

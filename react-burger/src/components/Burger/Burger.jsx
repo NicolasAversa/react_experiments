@@ -25,7 +25,7 @@ function Burger(props) {
 
   return (
     <Col xs={12}>
-      <div className={`${styles.Burger} d-flex flex-column justify-content-center`}>
+      <div className={styles.Burger}>
         <BurgerIngredient type="bread-top" />
         {transformedIngredients}
         <BurgerIngredient type="bread-bottom" />
