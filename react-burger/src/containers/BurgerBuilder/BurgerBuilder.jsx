@@ -108,7 +108,7 @@ function BurgerBuilder() {
 
   let burgerModal = null;
   let burger = error ? (
-    <p className="mt-5 ml-3">Ingredients can't be loaded</p>
+    <p className="mt-5 ml-3">Ingredients cannot be loaded</p>
   ) : (
     <Spinner animation="border" variant="primary" className="mt-5 mx-auto" />
   );

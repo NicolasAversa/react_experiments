@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import axios from '../../axios';
 import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
@@ -40,15 +42,13 @@ function Blog() {
   }
 
   return (
-    <div>
-      <section className="Posts">{postList}</section>
-      <section>
-        <FullPost selectedPostId={selectedPostId} />
-      </section>
-      <section>
+    <Row>
+      {postList}
+      <FullPost selectedPostId={selectedPostId} />
+      <Col xs={12}>
         <NewPost />
-      </section>
-    </div>
+      </Col>
+    </Row>
   );
 }
 export default Blog;

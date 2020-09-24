@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-import './FullPost.css';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 
 function FullPost(props) {
   const [loadedPosts, setLoadedPosts] = useState(null);
@@ -29,19 +29,19 @@ function FullPost(props) {
   }
   if (loadedPosts) {
     post = (
-      <div className="FullPost">
-        <h1>{loadedPosts.title}</h1>
-        <p>{loadedPosts.body}</p>
-        <div className="Edit">
-          <button className="Delete" onClick={deletePostHandler}>
-            Delete
-          </button>
-        </div>
-      </div>
+      <Card>
+        <Card.Body>
+          <Card.Title>{loadedPosts.title}</Card.Title>
+          <Card.Text>
+            {loadedPosts.body}
+          </Card.Text>
+          <Card.Link href="#" onClick={deletePostHandler}>Delete</Card.Link>
+        </Card.Body>
+      </Card>
     );
   }
 
-  return <>{post}</>;
+  return <Col xs={12}>{post}</Col>;
 }
 
 export default FullPost;

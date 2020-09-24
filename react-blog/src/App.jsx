@@ -1,11 +1,12 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
 import Blog from './containers/Blog/Blog';
 
 function App() {
   return (
-    <div className="App">
+    <Container>
       <Blog />
-    </div>
+    </Container>
   );
 }
 
