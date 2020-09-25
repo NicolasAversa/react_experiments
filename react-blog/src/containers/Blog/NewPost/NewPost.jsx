@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Row from 'react-bootstrap/Row';
 import './NewPost.css';
 
 function NewPost() {
@@ -21,7 +22,7 @@ function NewPost() {
   };
 
   return (
-    <div className="NewPost">
+    <Row className="NewPost">
       <h1>Add a Post</h1>
       <label>Title</label>
       <input
@@ -46,7 +47,7 @@ function NewPost() {
       <button type="submit" onClick={postDataHandler}>
         Add Post
       </button>
-    </div>
+    </Row>
   );
 }
 

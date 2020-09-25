@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import axios from 'axios';
-import App from './App';
+import App from './containers/App/App';
 import * as serviceWorker from './serviceWorker';
 
 // Setting axios defaults globally
