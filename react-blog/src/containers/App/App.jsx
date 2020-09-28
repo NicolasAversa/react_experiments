@@ -5,13 +5,11 @@ import Blog from '../Blog/Blog';
 
 function App() {
   return (
-    <>
+    <Router>
       <Layout>
-        <Router>
-          <Blog />
-        </Router>
+        <Blog />
       </Layout>
-    </>
+    </Router>
   );
 }
 

@@ -7,13 +7,15 @@ const instance = axios.create({
 instance.defaults.headers.common.Authorization = 'AUTH TOKEN FROM INSTANCE';
 
 // Setting interceptors locally in the instance
-instance.interceptors.request.use((request) => {
-  console.log(request);
-  return request;
-},
-(error) => {
-  console.log(error);
-  return Promise.reject(error);
-});
+instance.interceptors.request.use(
+  (request) => {
+    console.log(request);
+    return request;
+  },
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  },
+);
 
 export default instance;
