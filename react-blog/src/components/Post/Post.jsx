@@ -10,7 +10,7 @@ function Post(props) {
 
   return (
     <Col xs={4} className="mb-3">
-      <Link to={`/${id}`}>
+      <Link to={`/posts/${id}`}>
         <Card onClick={clicked}>
           <Card.Body>
             <Card.Title>{title}</Card.Title>

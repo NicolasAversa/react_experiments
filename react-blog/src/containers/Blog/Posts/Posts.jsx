@@ -46,7 +46,7 @@ function Posts(props) {
   return (
     <Row>
       {postList}
-      <Route path={`${match.url}:postId`} exact component={FullPost} />
+      <Route path={`${match.url}/:postId`} exact component={FullPost} />
     </Row>
   );
 }
