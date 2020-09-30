@@ -13,13 +13,14 @@ const INGREDIENT_PRICES = {
   meat: 1.3,
 };
 
-function BurgerBuilder() {
+function BurgerBuilder(props) {
   const [ingredients, setIngredients] = useState(null);
   const [totalPrice, setTotalPrice] = useState(4);
   const [purchasable, setPurchasable] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const { history } = props;
 
   useEffect(() => {
     axios
@@ -81,29 +82,30 @@ function BurgerBuilder() {
   };
 
   const purchaseContinueHandler = () => {
-    setLoading(true);
+    history.push('/checkout');
+    // setLoading(true);
 
-    const order = {
-      ingredients,
-      totalPrice: totalPrice.toFixed(2),
-      customer: {
-        name: 'Juanma Arancibia',
-        adress: { street: '33', number: '825 1/2', country: 'Argentina' },
-        email: 'juanma@hotmail.com',
-      },
-      deliveryMethod: 'Fastest',
-    };
+    // const order = {
+    //   ingredients,
+    //   totalPrice: totalPrice.toFixed(2),
+    //   customer: {
+    //     name: 'Juanma Arancibia',
+    //     adress: { street: '33', number: '825 1/2', country: 'Argentina' },
+    //     email: 'juanma@hotmail.com',
+    //   },
+    //   deliveryMethod: 'Fastest',
+    // };
 
-    axios
-      .post('/orders.json', order)
-      .then(() => {
-        setLoading(false);
-        setPurchasing(false);
-      })
-      .catch(() => {
-        setLoading(false);
-        setPurchasing(false);
-      });
+    // axios
+    //   .post('/orders.json', order)
+    //   .then(() => {
+    //     setLoading(false);
+    //     setPurchasing(false);
+    //   })
+    //   .catch(() => {
+    //     setLoading(false);
+    //     setPurchasing(false);
+    //   });
   };
 
   let burgerModal = null;

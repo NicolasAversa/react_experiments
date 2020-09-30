@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import burgerLogo from '../../../assets/images/logo.png';
@@ -18,12 +19,12 @@ function Toolbar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          <Nav.Link href="#" className={`${styles.navLinkActive} text-white`}>
+          <NavLink to="/burger-builder" activeClassName={styles.navLinkActive} className="nav-link text-white">
             Burger Builder
-          </Nav.Link>
-          <Nav.Link href="#" className="text-white">
-            Checkout
-          </Nav.Link>
+          </NavLink>
+          <NavLink to="/my-orders" activeClassName={styles.navLinkActive} className="nav-link text-white">
+            My Orders
+          </NavLink>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

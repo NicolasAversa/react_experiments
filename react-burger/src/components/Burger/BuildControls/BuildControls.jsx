@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import BuildControl from './BuildControl/BuildControl';
 import styles from './BuildControls.module.css';
@@ -42,20 +43,23 @@ function BuildControls(props) {
   ));
 
   return (
-    <Col xs={12} className={`${styles.buildControls} py-4 d-flex align-items-center flex-column`}>
-      <p>
-        Current price:
-        <b className="font-weight-bold d-inline">{` ${totalPrice.toFixed(2)}`}</b>
-      </p>
-      {controlsRendered}
-      <Button
-        className={`${styles.orderButton} mt-3 border-0`}
-        onClick={purchaseHandler}
-        disabled={!purchasable}
-      >
-        ORDER NOW
-      </Button>
-    </Col>
+    <Row>
+
+      <Col xs={12} className={`${styles.buildControls} py-4 d-flex align-items-center flex-column`}>
+        <p>
+          Current price:
+          <b className="font-weight-bold d-inline">{` ${totalPrice.toFixed(2)}`}</b>
+        </p>
+        {controlsRendered}
+        <Button
+          className={`${styles.orderButton} mt-3 border-0`}
+          onClick={purchaseHandler}
+          disabled={!purchasable}
+        >
+          ORDER NOW
+        </Button>
+      </Col>
+    </Row>
   );
 }
 

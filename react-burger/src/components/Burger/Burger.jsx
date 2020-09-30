@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import styles from './Burger.module.css';
@@ -24,13 +25,15 @@ function Burger(props) {
   }
 
   return (
-    <Col xs={12}>
-      <div className={styles.Burger}>
-        <BurgerIngredient type="bread-top" />
-        {transformedIngredients}
-        <BurgerIngredient type="bread-bottom" />
-      </div>
-    </Col>
+    <Row>
+      <Col xs={12}>
+        <div className={styles.Burger}>
+          <BurgerIngredient type="bread-top" />
+          {transformedIngredients}
+          <BurgerIngredient type="bread-bottom" />
+        </div>
+      </Col>
+    </Row>
   );
 }
 
