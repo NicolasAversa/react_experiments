@@ -5,6 +5,7 @@ import {
 import Layout from '../../hoc/Layout/Layout';
 import BurgerBuilder from '../BurgerBuilder/BurgerBuilder';
 import Checkout from '../Checkout/Checkout';
+import ContactData from '../Checkout/ContactData/ContactData';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Switch>
           <Route path="/burger-builder" component={BurgerBuilder} />
           <Route path="/checkout" component={Checkout} />
+          <Route path="/contact-data" component={ContactData} />
           <Redirect from="/" to="/burger-builder" />
         </Switch>
       </Layout>

@@ -4,7 +4,7 @@ import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import Burger from '../../Burger/Burger';
 
 function CheckoutSummary(props) {
-  const { ingredients } = props;
+  const { ingredients, checkoutCancelledHandler, checkoutContinuedHandler } = props;
   return (
     <>
       <Auxiliary className="d-flex justify-content-center my-3">
@@ -12,8 +12,12 @@ function CheckoutSummary(props) {
       </Auxiliary>
       <Burger ingredients={ingredients} />
       <Auxiliary className="d-flex justify-content-center my-3">
-        <Button variant="outline-danger" className="mx-2">CANCEL</Button>
-        <Button variant="outline-success" className="mx-2">CONTINUE</Button>
+        <Button variant="outline-danger" onClick={checkoutCancelledHandler} className="mx-2">
+          CANCEL
+        </Button>
+        <Button variant="outline-success" onClick={checkoutContinuedHandler} className="mx-2">
+          CONTINUE
+        </Button>
       </Auxiliary>
     </>
   );

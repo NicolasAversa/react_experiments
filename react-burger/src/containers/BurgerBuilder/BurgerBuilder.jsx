@@ -82,7 +82,11 @@ function BurgerBuilder(props) {
   };
 
   const purchaseContinueHandler = () => {
-    history.push('/checkout');
+    const queryParameters = Object.entries(ingredients)
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    const queryString = queryParameters.join('&');
+
+    history.push({ pathname: '/checkout', search: `?${queryString}` });
     // setLoading(true);
 
     // const order = {
