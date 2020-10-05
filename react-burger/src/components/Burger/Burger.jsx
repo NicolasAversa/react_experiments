@@ -6,12 +6,16 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import styles from './Burger.module.css';
 
 const propTypes = {
-  ingredients: PropTypes.shape({
-    salad: PropTypes.number,
-    bacon: PropTypes.number,
-    cheese: PropTypes.number,
-    meat: PropTypes.number,
-  }).isRequired,
+  ingredients: PropTypes.objectOf(PropTypes.number),
+};
+
+const defaultProps = {
+  ingredients: {
+    salad: 0,
+    bacon: 0,
+    cheese: 0,
+    meat: 0,
+  },
 };
 
 function Burger(props) {
@@ -39,5 +43,6 @@ function Burger(props) {
 }
 
 Burger.propTypes = propTypes;
+Burger.defaultProps = defaultProps;
 
 export default Burger;

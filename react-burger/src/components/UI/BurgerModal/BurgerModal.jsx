@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
 
 const propTypes = {
   show: PropTypes.bool.isRequired,
@@ -10,13 +9,13 @@ const propTypes = {
   purchaseContinueHandler: PropTypes.func.isRequired,
   ingredients: PropTypes.objectOf(PropTypes.number).isRequired,
   totalPrice: PropTypes.number.isRequired,
-  loading: PropTypes.bool.isRequired,
 };
 
 function BurgerModal(props) {
   const {
-    show, handleClose, purchaseContinueHandler, ingredients, totalPrice, loading,
+    show, handleClose, purchaseContinueHandler, ingredients, totalPrice,
   } = props;
+
   const ingredientsSummary = Object.keys(ingredients).map((ingredientKey) => (
     <li key={ingredientKey} className="text-capitalize">
       {ingredientKey}
@@ -45,7 +44,6 @@ function BurgerModal(props) {
         <Button variant="outline-success" onClick={purchaseContinueHandler}>
           Continue
         </Button>
-        <Spinner animation="border" variant="primary" className={!loading ? 'd-none' : ''} />
       </Modal.Footer>
     </Modal>
   );

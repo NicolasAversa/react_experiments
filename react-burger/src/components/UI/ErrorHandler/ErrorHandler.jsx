@@ -8,7 +8,7 @@ const propTypes = {
 
 // Global component to handle errors with axios
 function ErrorHandler(props) {
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const { axios } = props;
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function ErrorHandler(props) {
 
   let errorParagraph = null;
   if (errorMessage) {
-    errorParagraph = <p>{errorMessage.message}</p>;
+    errorParagraph = errorMessage.message;
   }
 
   return (
