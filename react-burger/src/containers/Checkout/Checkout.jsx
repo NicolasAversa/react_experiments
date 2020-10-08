@@ -11,7 +11,7 @@ const propTypes = {
 };
 
 function Checkout(props) {
-  const [ingredients, setIngredients] = useState();
+  const [ingredients, setIngredients] = useState({});
   const [totalPrice] = useState(0);
   const { history, location, match } = props;
 

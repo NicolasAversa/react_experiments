@@ -7,12 +7,21 @@ import BuildControl from './BuildControl/BuildControl';
 import styles from './BuildControls.module.css';
 
 const propTypes = {
-  addIngredientHandler: PropTypes.func.isRequired,
-  removeIngredientHandler: PropTypes.func.isRequired,
-  purchaseHandler: PropTypes.func.isRequired,
-  totalPrice: PropTypes.number.isRequired,
-  purchasable: PropTypes.bool.isRequired,
-  disabled: PropTypes.objectOf(PropTypes.bool).isRequired,
+  addIngredientHandler: PropTypes.func,
+  removeIngredientHandler: PropTypes.func,
+  purchaseHandler: PropTypes.func,
+  totalPrice: PropTypes.number,
+  purchasable: PropTypes.bool,
+  disabled: PropTypes.objectOf(PropTypes.bool),
+};
+
+const defaultProps = {
+  addIngredientHandler: () => {},
+  removeIngredientHandler: () => {},
+  purchaseHandler: () => {},
+  totalPrice: 0,
+  purchasable: false,
+  disabled: {},
 };
 
 const controls = [
@@ -64,5 +73,6 @@ function BuildControls(props) {
 }
 
 BuildControls.propTypes = propTypes;
+BuildControls.defaultProps = defaultProps;
 
 export default BuildControls;

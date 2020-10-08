@@ -14,7 +14,7 @@ const INGREDIENT_PRICES = {
 };
 
 function BurgerBuilder(props) {
-  const [ingredients, setIngredients] = useState();
+  const [ingredients, setIngredients] = useState({});
   const [totalPrice, setTotalPrice] = useState(4);
   const [purchasable, setPurchasable] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
@@ -33,26 +33,24 @@ function BurgerBuilder(props) {
       });
   }, []);
 
+  const updateTotalPrice = (newIngredients) => {
+    const newPrice = Object.entries(newIngredients)
+      .map(([key, value]) => value * INGREDIENT_PRICES[key])
+      .reduce((sum, value) => sum + value, 2.7);
+    setTotalPrice(newPrice);
+  };
+
   const updatePurchaseState = (newIngredients) => {
-    const ingredientsSum = Object.keys(newIngredients)
-      .map((key) => newIngredients[key])
-      .reduce((sum, element) => sum + element, 0);
+    const ingredientsSum = Object.values(newIngredients).reduce((sum, element) => sum + element, 0);
     setPurchasable(ingredientsSum > 0);
   };
 
   const addIngredientHandler = (type) => {
-    const oldCount = ingredients[type];
-    const updatedCount = oldCount + 1;
-    const updatedIngredients = { ...ingredients };
-    updatedIngredients[type] = updatedCount;
-    setIngredients(updatedIngredients);
+    const newIngredients = { ...ingredients, [type]: ingredients[type] + 1 };
+    setIngredients(newIngredients);
 
-    const priceAddition = INGREDIENT_PRICES[type];
-    const oldPrice = totalPrice;
-    const newPrice = oldPrice + priceAddition;
-    setTotalPrice(newPrice);
-
-    updatePurchaseState(updatedIngredients);
+    updateTotalPrice(newIngredients);
+    updatePurchaseState(newIngredients);
   };
 
   const removeIngredientHandler = (type) => {
@@ -60,17 +58,11 @@ function BurgerBuilder(props) {
     if (oldCount <= 0) {
       return;
     }
-    const updatedCount = oldCount - 1;
-    const updatedIngredients = { ...ingredients };
-    updatedIngredients[type] = updatedCount;
-    setIngredients(updatedIngredients);
+    const newIngredients = { ...ingredients, [type]: ingredients[type] - 1 };
+    setIngredients(newIngredients);
 
-    const priceReduction = INGREDIENT_PRICES[type];
-    const oldPrice = totalPrice;
-    const newPrice = oldPrice - priceReduction;
-    setTotalPrice(newPrice);
-
-    updatePurchaseState(updatedIngredients);
+    updateTotalPrice(newIngredients);
+    updatePurchaseState(newIngredients);
   };
 
   const purchaseHandler = () => {
@@ -82,8 +74,9 @@ function BurgerBuilder(props) {
   };
 
   const purchaseContinueHandler = () => {
-    const queryParameters = Object.entries(ingredients)
-      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    const queryParameters = Object.entries(ingredients).map(
+      ([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+    );
 
     const queryString = queryParameters.join('&');
 

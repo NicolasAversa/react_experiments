@@ -5,10 +5,17 @@ import Button from 'react-bootstrap/Button';
 import styles from './BuildControl.module.css';
 
 const propTypes = {
-  label: PropTypes.string.isRequired,
-  addIngredientHandler: PropTypes.func.isRequired,
-  removeIngredientHandler: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  label: PropTypes.string,
+  addIngredientHandler: PropTypes.func,
+  removeIngredientHandler: PropTypes.func,
+  disabled: PropTypes.bool,
+};
+
+const defaultProps = {
+  label: '',
+  addIngredientHandler: () => {},
+  removeIngredientHandler: () => {},
+  disabled: true,
 };
 
 function BuildControl(props) {
@@ -36,5 +43,6 @@ function BuildControl(props) {
 }
 
 BuildControl.propTypes = propTypes;
+BuildControl.defaultProps = defaultProps;
 
 export default BuildControl;

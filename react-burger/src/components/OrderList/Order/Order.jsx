@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 
+const propTypes = {
+  ingredients: PropTypes.objectOf(PropTypes.number),
+  totalPrice: PropTypes.number,
+};
+
+const defaultProps = {
+  ingredients: {},
+  totalPrice: 0,
+};
+
 function Order(props) {
   const { ingredients, totalPrice } = props;
 
@@ -30,5 +40,8 @@ function Order(props) {
     </ListGroup.Item>
   );
 }
+
+Order.propTypes = propTypes;
+Order.defaultProps = defaultProps;
 
 export default Order;

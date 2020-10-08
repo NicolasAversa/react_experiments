@@ -5,6 +5,14 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Order from './Order/Order';
 
+const propTypes = {
+  orders: PropTypes.arrayOf(PropTypes.object),
+};
+
+const defaultProps = {
+  orders: [],
+};
+
 function OrderList(props) {
   const { orders } = props;
 
@@ -20,5 +28,8 @@ function OrderList(props) {
     </Row>
   );
 }
+
+OrderList.propTypes = propTypes;
+OrderList.defaultProps = defaultProps;
 
 export default OrderList;
