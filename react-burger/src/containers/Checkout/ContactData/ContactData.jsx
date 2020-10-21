@@ -22,8 +22,14 @@ function ContactData(props) {
         label: 'Name',
         type: 'text',
         placeholder: 'Your name',
+        errorMessage: 'This field is mandatory',
       },
       value: '',
+      rules: {
+        required: true,
+      },
+      valid: false,
+      dirty: false,
     },
     email: {
       elementConfig: {
@@ -31,8 +37,14 @@ function ContactData(props) {
         label: 'Email',
         type: 'email',
         placeholder: 'Your email',
+        errorMessage: 'This field is mandatory',
       },
       value: '',
+      rules: {
+        required: true,
+      },
+      valid: false,
+      dirty: false,
     },
     street: {
       elementConfig: {
@@ -40,8 +52,16 @@ function ContactData(props) {
         label: 'Street',
         type: 'text',
         placeholder: 'Your street',
+        errorMessage: 'Invalid street number',
       },
       value: '',
+      rules: {
+        required: true,
+        minLength: 2,
+        maxLength: 3,
+      },
+      valid: false,
+      dirty: false,
     },
     number: {
       elementConfig: {
@@ -49,8 +69,15 @@ function ContactData(props) {
         label: 'Number',
         type: 'text',
         placeholder: 'Your house number',
+        errorMessage: 'Invalid house number',
       },
       value: '',
+      rules: {
+        required: true,
+        maxLength: 4,
+      },
+      valid: false,
+      dirty: false,
     },
     country: {
       elementConfig: {
@@ -58,11 +85,18 @@ function ContactData(props) {
         label: 'Country',
         type: 'text',
         placeholder: 'Your country',
+        errorMessage: 'This field is mandatory',
       },
       value: '',
+      rules: {
+        required: true,
+      },
+      valid: false,
+      dirty: false,
     },
   });
   const [loading, setLoading] = useState(false);
+  const [formIsValid, setFormIsValid] = useState(false);
   const { ingredients, totalPrice, history } = props;
 
   const orderHandler = (event) => {
@@ -90,11 +124,42 @@ function ContactData(props) {
       .catch(() => {});
   };
 
+  const checkValidity = (value, rules) => {
+    let isValid = true;
+
+    if (rules.required) {
+      isValid = value.trim() !== '' && isValid;
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    return isValid;
+  };
+
   const inputChangeHandler = (event, key) => {
-    setOrderForm({
+    const newOrderForm = {
       ...orderForm,
-      [key]: { ...orderForm[key], value: event.target.value },
+      [key]: {
+        ...orderForm[key],
+        value: event.target.value,
+        valid: checkValidity(event.target.value, orderForm[key].rules),
+        dirty: true,
+      },
+    };
+    setOrderForm(newOrderForm);
+
+    // Global form validation
+    let newFormIsValid = true;
+    Object.keys(newOrderForm).forEach((fieldIdentifier) => {
+      newFormIsValid = newOrderForm[fieldIdentifier].valid && newFormIsValid;
     });
+    setFormIsValid(newFormIsValid);
   };
 
   return (
@@ -105,6 +170,7 @@ function ContactData(props) {
           loading={loading}
           orderForm={orderForm}
           inputChangeHandler={inputChangeHandler}
+          formIsValid={formIsValid}
         />
       </Col>
     </Row>

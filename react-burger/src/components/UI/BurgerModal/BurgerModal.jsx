@@ -16,11 +16,11 @@ function BurgerModal(props) {
     show, handleClose, purchaseContinueHandler, ingredients, totalPrice,
   } = props;
 
-  const ingredientsSummary = Object.keys(ingredients).map((ingredientKey) => (
-    <li key={ingredientKey} className="text-capitalize">
-      {ingredientKey}
+  const ingredientsSummary = Object.entries(ingredients).map(([key, value]) => (
+    <li key={key} className="text-capitalize">
+      {key}
       :
-      {` ${ingredients[ingredientKey]}`}
+      {` ${value}`}
     </li>
   ));
 

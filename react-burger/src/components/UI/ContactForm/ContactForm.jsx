@@ -10,30 +10,38 @@ const propTypes = {
   loading: PropTypes.bool,
   orderForm: PropTypes.objectOf(PropTypes.object).isRequired,
   inputChangeHandler: PropTypes.func,
+  formIsValid: PropTypes.bool,
+
 };
 
 const defaultProps = {
   orderHandler: () => {},
   loading: false,
   inputChangeHandler: () => {},
+  formIsValid: false,
 };
 
 function ContactForm(props) {
   const {
-    orderHandler, loading, orderForm, inputChangeHandler,
+    orderHandler, loading, orderForm, inputChangeHandler, formIsValid,
   } = props;
 
   const formElementsArray = Object.entries(orderForm).map(([key, value]) => ({
     id: key,
     elementConfig: value.elementConfig,
     value: value.value,
+    valid: value.valid,
+    dirty: value.dirty,
   }));
+
   const formElements = formElementsArray.map((formElement) => (
     <FormInput
       key={formElement.id}
       elementConfig={formElement.elementConfig}
       onChange={(event) => inputChangeHandler(event, formElement.id)}
       value={formElement.value}
+      valid={formElement.valid}
+      dirty={formElement.dirty}
     />
   ));
 
@@ -43,8 +51,8 @@ function ContactForm(props) {
       <Button
         variant="primary"
         type="submit"
-        onClick={orderHandler}
         className={loading ? 'd-none' : ''}
+        disabled={!formIsValid}
       >
         ORDER
       </Button>

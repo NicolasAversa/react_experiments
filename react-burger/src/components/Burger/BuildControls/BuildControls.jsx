@@ -53,7 +53,6 @@ function BuildControls(props) {
 
   return (
     <Row>
-
       <Col xs={12} className={`${styles.buildControls} py-4 d-flex align-items-center flex-column`}>
         <p>
           Current price:

@@ -9,9 +9,12 @@ const propTypes = {
     type: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
+    errorMessage: PropTypes.string,
   }),
   onChange: PropTypes.func,
   value: PropTypes.string,
+  valid: PropTypes.bool,
+  dirty: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -20,13 +23,18 @@ const defaultProps = {
     label: 'Your label here',
     type: 'text',
     placeholder: 'Your placeholder here',
+    errorMessage: 'Invalid field',
   },
   onChange: () => {},
   value: '',
+  valid: false,
+  dirty: true,
 };
 
 function FormInput(props) {
-  const { elementConfig, value, onChange } = props;
+  const {
+    elementConfig, value, onChange, valid, dirty,
+  } = props;
 
   return (
     <Col xs={elementConfig.col}>
@@ -36,7 +44,9 @@ function FormInput(props) {
           type={elementConfig.type}
           placeholder={elementConfig.placeholder}
           onChange={onChange}
+          isInvalid={!valid && dirty}
         />
+        <Form.Control.Feedback type="invalid">{elementConfig.errorMessage}</Form.Control.Feedback>
       </Form.Group>
     </Col>
   );
