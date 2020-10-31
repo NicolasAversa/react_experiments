@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -11,6 +12,10 @@ const INGREDIENT_PRICES = {
   bacon: 0.7,
   cheese: 0.4,
   meat: 1.3,
+};
+
+const propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 function BurgerBuilder(props) {
@@ -129,5 +134,7 @@ function BurgerBuilder(props) {
     </>
   );
 }
+
+BurgerBuilder.propTypes = propTypes;
 
 export default BurgerBuilder;

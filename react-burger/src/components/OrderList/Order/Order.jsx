@@ -18,8 +18,8 @@ function Order(props) {
 
   const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-  const ingredientOutput = Object.entries(ingredients).map(([key, value], i) => (
-    <Badge key={key + i} variant="primary" className="mx-1 p-2">{`${capitalize(key)} ${value}`}</Badge>
+  const ingredientOutput = Object.entries(ingredients).map(([key, value]) => (
+    <Badge key={key + value} variant="primary" className="mx-1 p-2">{`${capitalize(key)} ${value}`}</Badge>
   ));
 
   return (

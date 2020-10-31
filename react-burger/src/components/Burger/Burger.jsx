@@ -22,7 +22,8 @@ function Burger(props) {
   const { ingredients } = props;
 
   let transformedIngredients = Object.entries(ingredients)
-    .map(([key, value]) => [...Array(value)].map((_, i) => <BurgerIngredient key={key + i} type={key} />))
+    // eslint-disable-next-line max-len
+    .map(([key, value]) => [...Array(value)].map((_) => <BurgerIngredient key={key + _} type={key} />))
     .flat();
 
   if (transformedIngredients.length === 0) {

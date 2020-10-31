@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import CheckoutSummary from '../../components/OrderList/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
- 
+
 const propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   location: PropTypes.objectOf(PropTypes.any).isRequired,

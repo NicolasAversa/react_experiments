@@ -12,6 +12,7 @@ function Orders() {
     axios
       .get('/orders.json')
       .then((response) => {
+        // eslint-disable-next-line max-len
         const fetchedOrders = Object.entries(response.data).map(([key, value]) => ({ ...value, id: key }));
         // setLoading(false);
         setOrders(fetchedOrders);
