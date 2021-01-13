@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
+import {
+  Row, Col, Button, version,
+} from 'antd';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import styles from './Burger.module.css';
 
@@ -18,12 +21,12 @@ const defaultProps = {
   },
 };
 
-function Burger(props) {
-  const { ingredients } = props;
-
+function Burger({ ingredients }) {
   let transformedIngredients = Object.entries(ingredients)
     // eslint-disable-next-line max-len
-    .map(([key, value]) => [...Array(value)].map((_) => <BurgerIngredient key={key + _} type={key} />))
+    .map(([key, value]) => [...Array(value)]
+    // eslint-disable-next-line react/no-array-index-key
+      .map((_, i) => <BurgerIngredient key={key + i} type={key} />))
     .flat();
 
   if (transformedIngredients.length === 0) {
@@ -32,12 +35,13 @@ function Burger(props) {
 
   return (
     <Row>
-      <Col xs={12}>
+      <Col xs={6} offset={8}>
         <div className={styles.Burger}>
           <BurgerIngredient type="bread-top" />
           {transformedIngredients}
           <BurgerIngredient type="bread-bottom" />
         </div>
+        <Button type="primary">{version}</Button>
       </Col>
     </Row>
   );

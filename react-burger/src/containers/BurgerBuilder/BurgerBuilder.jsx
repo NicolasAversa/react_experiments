@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import produce from 'immer';
 import PropTypes from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
 import Burger from '../../components/Burger/Burger';
@@ -39,19 +40,28 @@ function BurgerBuilder(props) {
   }, []);
 
   const updateTotalPrice = (newIngredients) => {
-    const newPrice = Object.entries(newIngredients)
-      .map(([key, value]) => value * INGREDIENT_PRICES[key])
-      .reduce((sum, value) => sum + value, 2.7);
+    // {bacon: 0, cheese: 0, meat: 1, salad: 2}
+    const ingredientEntries = Object.entries(newIngredients);
+    // [["bacon", 0], ["cheese", 0], ["meat", 1], ["salad", 2]]
+    const ingredientsPrices = ingredientEntries.map(
+      ([key, value]) => value * INGREDIENT_PRICES[key],
+    );
+    // [0, 0, 1.3, 1]
+    const newPrice = ingredientsPrices.reduce((sum, value) => sum + value, 2.7);
+
     setTotalPrice(newPrice);
   };
 
   const updatePurchaseState = (newIngredients) => {
-    const ingredientsSum = Object.values(newIngredients).reduce((sum, element) => sum + element, 0);
+    const ingredientsSum = Object.values(newIngredients).reduce((total, price) => total + price, 0);
     setPurchasable(ingredientsSum > 0);
   };
 
   const addIngredientHandler = (type) => {
-    const newIngredients = { ...ingredients, [type]: ingredients[type] + 1 };
+    const newIngredients = produce(ingredients, (draftIngredients) => {
+      // eslint-disable-next-line no-param-reassign
+      draftIngredients[type] += 1;
+    });
     setIngredients(newIngredients);
 
     updateTotalPrice(newIngredients);
@@ -59,11 +69,13 @@ function BurgerBuilder(props) {
   };
 
   const removeIngredientHandler = (type) => {
-    const oldCount = ingredients[type];
-    if (oldCount <= 0) {
+    if (ingredients[type] <= 0) {
       return;
     }
-    const newIngredients = { ...ingredients, [type]: ingredients[type] - 1 };
+    const newIngredients = produce(ingredients, (draftIngredients) => {
+      // eslint-disable-next-line no-param-reassign
+      draftIngredients[type] -= 1;
+    });
     setIngredients(newIngredients);
 
     updateTotalPrice(newIngredients);
