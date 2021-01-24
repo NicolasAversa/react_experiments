@@ -1,0 +1,17 @@
+.Navbar {
+  background-color: #fff159;
+  height: 3.5rem;
+  line-height: 3.5rem;
+}
+
+@media only screen and (min-width: 992px) {
+  .Navbar {
+    padding: 0rem 1rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .Navbar {
+    padding: 0rem 7.5rem;
+  }
+}

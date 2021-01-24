@@ -1,39 +1,22 @@
-import { ADD_TODO, TOGGLE_TODO } from '../actionTypes';
+/* eslint-disable no-param-reassign */
+import { createReducer } from '@reduxjs/toolkit';
+import { increment, decrement } from '../actions';
 
 const initialState = {
   counter: 0,
 };
 
-export default function reducer(state = initialState, action) {
-  switch (action.type) {
-    case ADD_TODO: {
-      const { id, content } = action.payload;
-      return {
-        ...state,
-        allIds: [...state.allIds, id],
-        byIds: {
-          ...state.byIds,
-          [id]: {
-            content,
-            completed: false,
-          },
-        },
-      };
-    }
-    case TOGGLE_TODO: {
-      const { id } = action.payload;
-      return {
-        ...state,
-        byIds: {
-          ...state.byIds,
-          [id]: {
-            ...state.byIds[id],
-            completed: !state.byIds[id].completed,
-          },
-        },
-      };
-    }
-    default:
-      return state;
-  }
-}
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase(increment, (state, action) => {
+      state.counter += action.payload;
+    })
+    .addCase(decrement, (state, action) => {
+      if (state.counter - action.payload <= 0) {
+        state.counter = 0;
+      } else {
+        state.counter -= action.payload;
+      }
+    })
+    .addDefaultCase((state) => { state.counter = 0; });
+});
