@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
 import {
-  Row, Col, Button, version,
+  Row, Col,
 } from 'antd';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import styles from './Burger.module.css';
@@ -41,7 +39,6 @@ function Burger({ ingredients }) {
           {transformedIngredients}
           <BurgerIngredient type="bread-bottom" />
         </div>
-        <Button type="primary">{version}</Button>
       </Col>
     </Row>
   );

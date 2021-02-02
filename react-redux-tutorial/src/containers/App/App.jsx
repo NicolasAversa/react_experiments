@@ -1,11 +1,12 @@
 import React from 'react';
 import Counter from '../Counter/Counter';
+import Results from '../Results/Results';
 
 function App() {
   return (
     <>
       <Counter />
-      <p>sdfsdfsf</p>
+      <Results />
     </>
   );
 }

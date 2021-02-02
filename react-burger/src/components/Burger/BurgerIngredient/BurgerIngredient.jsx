@@ -6,9 +6,7 @@ const propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-function BurgerIngredient(props) {
-  const { type } = props;
-
+function BurgerIngredient({ type }) {
   let ingredient = null;
   switch (type) {
     case 'bread-bottom':

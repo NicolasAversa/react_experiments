@@ -8,15 +8,17 @@ const propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const CounterOutput = ({ value }) => (
-  <>
-    <Title>
-      Current Counter:
-      {` ${value}`}
-    </Title>
-    <Divider />
-  </>
-);
+function CounterOutput({ value }) {
+  return (
+    <>
+      <Title>
+        Current Counter:
+        {` ${value}`}
+      </Title>
+      <Divider />
+    </>
+  );
+}
 
 CounterOutput.propTypes = propTypes;
 export default CounterOutput;

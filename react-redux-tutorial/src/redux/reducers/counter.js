@@ -18,5 +18,5 @@ export default createReducer(initialState, (builder) => {
         state.counter -= action.payload;
       }
     })
-    .addDefaultCase((state) => { state.counter = 0; });
+    .addDefaultCase((state) => state);
 });

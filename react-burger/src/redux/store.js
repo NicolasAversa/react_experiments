@@ -1,8 +1,12 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import rootReducer from './reducers';
+import burger from './reducers/burger';
+
+const reducer = {
+  burger,
+};
 
 export default configureStore({
-  reducer: rootReducer,
+  reducer,
   middleware: getDefaultMiddleware({
     serializableCheck: false,
   }),

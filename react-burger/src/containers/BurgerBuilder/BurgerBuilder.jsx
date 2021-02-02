@@ -1,85 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import produce from 'immer';
+/* eslint-disable no-shadow */
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
+import { addIngredient, removeIngredient, updatePrice } from '../../redux/actions';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import BurgerModal from '../../components/UI/BurgerModal/BurgerModal';
 import ErrorHandler from '../../components/UI/ErrorHandler/ErrorHandler';
 import axios from '../../axios-orders';
 
-const INGREDIENT_PRICES = {
-  salad: 0.5,
-  bacon: 0.7,
-  cheese: 0.4,
-  meat: 1.3,
-};
-
 const propTypes = {
+  ingredients: PropTypes.objectOf(PropTypes.number).isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  purchasable: PropTypes.bool.isRequired,
+  addIngredient: PropTypes.func.isRequired,
+  removeIngredient: PropTypes.func.isRequired,
+  updatePrice: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-function BurgerBuilder(props) {
-  const [ingredients, setIngredients] = useState({});
-  const [totalPrice, setTotalPrice] = useState(4);
-  const [purchasable, setPurchasable] = useState(false);
+function BurgerBuilder({
+  history,
+  ingredients,
+  totalPrice,
+  purchasable,
+  addIngredient,
+  removeIngredient,
+  updatePrice,
+}) {
   const [purchasing, setPurchasing] = useState(false);
   const [loading] = useState(false);
-  const [error, setError] = useState(false);
-  const { history } = props;
+  const [error] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get('/ingredients.json')
-      .then((response) => {
-        setIngredients(response.data);
-      })
-      .catch(() => {
-        setError(true);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get('/ingredients.json')
+  //     .then((response) => {
+  //       setIngredients(response.data);
+  //     })
+  //     .catch(() => {
+  //       setError(true);
+  //     });
+  // }, []);
 
-  const updateTotalPrice = (newIngredients) => {
-    // {bacon: 0, cheese: 0, meat: 1, salad: 2}
-    const ingredientEntries = Object.entries(newIngredients);
-    // [["bacon", 0], ["cheese", 0], ["meat", 1], ["salad", 2]]
-    const ingredientsPrices = ingredientEntries.map(
-      ([key, value]) => value * INGREDIENT_PRICES[key],
-    );
-    // [0, 0, 1.3, 1]
-    const newPrice = ingredientsPrices.reduce((sum, value) => sum + value, 2.7);
+  // const updatePurchaseState = (newIngredients) => {
+  //   const ingredientsSum = Object.values(newIngredients)
+  // .reduce((total, price) => total + price, 0);
+  //   setPurchasable(ingredientsSum > 0);
+  // };
 
-    setTotalPrice(newPrice);
+  const handleAddIngredient = (ingredientType) => {
+    addIngredient(ingredientType);
+    updatePrice();
   };
 
-  const updatePurchaseState = (newIngredients) => {
-    const ingredientsSum = Object.values(newIngredients).reduce((total, price) => total + price, 0);
-    setPurchasable(ingredientsSum > 0);
-  };
-
-  const addIngredientHandler = (type) => {
-    const newIngredients = produce(ingredients, (draftIngredients) => {
-      // eslint-disable-next-line no-param-reassign
-      draftIngredients[type] += 1;
-    });
-    setIngredients(newIngredients);
-
-    updateTotalPrice(newIngredients);
-    updatePurchaseState(newIngredients);
-  };
-
-  const removeIngredientHandler = (type) => {
-    if (ingredients[type] <= 0) {
-      return;
-    }
-    const newIngredients = produce(ingredients, (draftIngredients) => {
-      // eslint-disable-next-line no-param-reassign
-      draftIngredients[type] -= 1;
-    });
-    setIngredients(newIngredients);
-
-    updateTotalPrice(newIngredients);
-    updatePurchaseState(newIngredients);
+  const handleRemoveIngredient = (ingredientType) => {
+    removeIngredient(ingredientType);
+    updatePrice();
   };
 
   const purchaseHandler = () => {
@@ -116,8 +94,8 @@ function BurgerBuilder(props) {
       <>
         <Burger ingredients={ingredients} />
         <BuildControls
-          addIngredientHandler={addIngredientHandler}
-          removeIngredientHandler={removeIngredientHandler}
+          onAddIngredient={handleAddIngredient}
+          onRemoveIngredient={handleRemoveIngredient}
           purchaseHandler={purchaseHandler}
           totalPrice={totalPrice}
           purchasable={purchasable}
@@ -149,4 +127,11 @@ function BurgerBuilder(props) {
 
 BurgerBuilder.propTypes = propTypes;
 
-export default BurgerBuilder;
+const mapStateToProps = (state) => ({
+  ingredients: state.burger.ingredients,
+  totalPrice: state.burger.totalPrice,
+  purchasable: state.burger.purchasable,
+});
+const mapDispatchToProps = { addIngredient, removeIngredient, updatePrice };
+
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);

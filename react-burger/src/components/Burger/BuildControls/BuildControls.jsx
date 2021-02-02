@@ -7,8 +7,8 @@ import BuildControl from './BuildControl/BuildControl';
 import styles from './BuildControls.module.css';
 
 const propTypes = {
-  addIngredientHandler: PropTypes.func,
-  removeIngredientHandler: PropTypes.func,
+  onAddIngredient: PropTypes.func,
+  onRemoveIngredient: PropTypes.func,
   purchaseHandler: PropTypes.func,
   totalPrice: PropTypes.number,
   purchasable: PropTypes.bool,
@@ -16,8 +16,8 @@ const propTypes = {
 };
 
 const defaultProps = {
-  addIngredientHandler: () => {},
-  removeIngredientHandler: () => {},
+  onAddIngredient: () => {},
+  onRemoveIngredient: () => {},
   purchaseHandler: () => {},
   totalPrice: 0,
   purchasable: false,
@@ -31,20 +31,18 @@ const controls = [
   { label: 'Meat', type: 'meat' },
 ];
 
-function BuildControls(props) {
-  const {
-    addIngredientHandler,
-    removeIngredientHandler,
-    purchaseHandler,
-    totalPrice,
-    purchasable,
-    disabled,
-  } = props;
-
+function BuildControls({
+  onAddIngredient,
+  onRemoveIngredient,
+  purchaseHandler,
+  totalPrice,
+  purchasable,
+  disabled,
+}) {
   const controlsRendered = controls.map((control) => (
     <BuildControl
-      addIngredientHandler={() => addIngredientHandler(control.type)}
-      removeIngredientHandler={() => removeIngredientHandler(control.type)}
+      onAddIngredient={() => onAddIngredient(control.type)}
+      onRemoveIngredient={() => onRemoveIngredient(control.type)}
       key={control.label}
       label={control.label}
       disabled={disabled[control.type]}

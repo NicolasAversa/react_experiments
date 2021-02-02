@@ -6,35 +6,33 @@ import styles from './BuildControl.module.css';
 
 const propTypes = {
   label: PropTypes.string,
-  addIngredientHandler: PropTypes.func,
-  removeIngredientHandler: PropTypes.func,
+  onAddIngredient: PropTypes.func,
+  onRemoveIngredient: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
 const defaultProps = {
   label: '',
-  addIngredientHandler: () => {},
-  removeIngredientHandler: () => {},
+  onAddIngredient: () => {},
+  onRemoveIngredient: () => {},
   disabled: true,
 };
 
-function BuildControl(props) {
-  const {
-    label, addIngredientHandler, removeIngredientHandler, disabled,
-  } = props;
-
+function BuildControl({
+  label, onAddIngredient, onRemoveIngredient, disabled,
+}) {
   return (
     <div className="d-flex align-items-center justify-content-center">
       <p className="mr-3">{label}</p>
       <ButtonGroup className="mb-2">
         <Button
           className={`${styles.less} border-0`}
-          onClick={removeIngredientHandler}
+          onClick={onRemoveIngredient}
           disabled={disabled}
         >
           Less
         </Button>
-        <Button className={`${styles.more} border-0`} onClick={addIngredientHandler}>
+        <Button className={`${styles.more} border-0`} onClick={onAddIngredient}>
           More
         </Button>
       </ButtonGroup>
