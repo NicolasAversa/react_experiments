@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createReducer } from '@reduxjs/toolkit';
-import { addIngredient, removeIngredient, updatePrice } from '../actions';
+import {
+  addIngredient, removeIngredient, updatePrice, updatePurchasable,
+} from '../actions';
 
 const initialState = {
   ingredients: {
@@ -41,6 +43,11 @@ export default createReducer(initialState, (builder) => {
       const newTotalPrice = ingredientsPrices.reduce((sum, value) => sum + value, 2.7);
 
       state.totalPrice = newTotalPrice;
+    })
+    .addCase(updatePurchasable, (state) => {
+      const ingredientsValues = Object.values(state.ingredients);
+      const ingredientsQuantities = ingredientsValues.reduce((sum, quantity) => sum + quantity);
+      state.purchasable = ingredientsQuantities > 0;
     })
     .addDefaultCase((state) => state);
 });

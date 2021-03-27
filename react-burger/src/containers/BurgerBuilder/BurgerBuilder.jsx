@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
-import { addIngredient, removeIngredient, updatePrice } from '../../redux/actions';
+import {
+  addIngredient, removeIngredient, updatePrice, updatePurchasable,
+} from '../../redux/actions';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import BurgerModal from '../../components/UI/BurgerModal/BurgerModal';
@@ -17,6 +19,7 @@ const propTypes = {
   addIngredient: PropTypes.func.isRequired,
   removeIngredient: PropTypes.func.isRequired,
   updatePrice: PropTypes.func.isRequired,
+  updatePurchasable: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
@@ -28,6 +31,7 @@ function BurgerBuilder({
   addIngredient,
   removeIngredient,
   updatePrice,
+  updatePurchasable,
 }) {
   const [purchasing, setPurchasing] = useState(false);
   const [loading] = useState(false);
@@ -44,20 +48,16 @@ function BurgerBuilder({
   //     });
   // }, []);
 
-  // const updatePurchaseState = (newIngredients) => {
-  //   const ingredientsSum = Object.values(newIngredients)
-  // .reduce((total, price) => total + price, 0);
-  //   setPurchasable(ingredientsSum > 0);
-  // };
-
   const handleAddIngredient = (ingredientType) => {
     addIngredient(ingredientType);
     updatePrice();
+    updatePurchasable();
   };
 
   const handleRemoveIngredient = (ingredientType) => {
     removeIngredient(ingredientType);
     updatePrice();
+    updatePurchasable();
   };
 
   const purchaseHandler = () => {
@@ -132,6 +132,8 @@ const mapStateToProps = (state) => ({
   totalPrice: state.burger.totalPrice,
   purchasable: state.burger.purchasable,
 });
-const mapDispatchToProps = { addIngredient, removeIngredient, updatePrice };
+const mapDispatchToProps = {
+  addIngredient, removeIngredient, updatePrice, updatePurchasable,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);
